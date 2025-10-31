@@ -1,0 +1,27 @@
+name: Import Folder from Another Repo
+
+on:
+  workflow_dispatch:  # lets you trigger it manually from the Actions tab
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout your repo
+      uses: actions/checkout@v4
+
+    - name: Install SVN
+      run: sudo apt-get install -y subversion
+
+    - name: Download folder from wenhuchen/Table-Fact-Checking
+      run: |
+        svn export https://github.com/wenhuchen/Table-Fact-Checking/trunk/data/all_csv data/all_csv
+
+    - name: Commit and push imported folder
+      run: |
+        git config user.name "github-actions"
+        git config user.email "github-actions@github.com"
+        git add data/all_csv
+        git commit -m "Import folder from wenhuchen/Table-Fact-Checking"
+        git push
