@@ -1,0 +1,5 @@
+# Deprecated files
+deprecated/
+
+# Data folder (too large)
+data/
